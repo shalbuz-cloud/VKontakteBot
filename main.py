@@ -60,9 +60,24 @@ class DataBot:
                         post = post.get('attachments')
                         if post is not None:
                             post = post[0]
+
                             if post['type'] == "photo":
                                 post_photo = post['photo']['sizes'][-1]['url']
                                 print(post_photo)
+                            elif post['type'] == 'video':
+                                video_access_key = post['video']['access_key']
+                                video_post_id = post['video']['id']
+                                video_owner_id = post['video']['owner_id']
+
+                                video_get_url = "https://api.vk.com/method/video.get?videos=%s_" \
+                                                "%s_%s&access_token=%s&v=5.131" % (
+                                                    video_owner_id, video_post_id,
+                                                    video_access_key, self.TOKEN)
+
+                                video_data = requests.get(video_get_url).json()
+                                video_url = video_data['response']['items'][0]['player']
+                                print(video_url)
+
                             else:
                                 continue
 
