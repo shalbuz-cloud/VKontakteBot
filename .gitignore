@@ -1,0 +1,11 @@
+.git/
+.idea/
+__pycache__/
+
+# venv
+venv/
+env/
+
+# logs
+*.log
+logs/
